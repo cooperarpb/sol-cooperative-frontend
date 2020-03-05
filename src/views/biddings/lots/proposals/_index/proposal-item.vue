@@ -54,7 +54,7 @@
     border: 1px dotted $danger-color;
     padding: 5px;
   }
-  
+
   .container {
     width: 100%;
     margin-bottom: 20px;
@@ -80,10 +80,10 @@
       .list-title(v-else)
         | {{ $t('.proposals.proposal') }} {{ index+1 }}
 
-      .list-span.mt-0(v-if="!index && proposal.suppliers")
+      .list-span.mt-0(v-if="proposal.status != 'sent' && proposal.suppliers")
         | {{ proposal.suppliers[0].email }}
       
-      .list-span.mt-0(v-if="!index && proposal.suppliers")
+      .list-span.mt-0(v-if="proposal.status != 'sent' && proposal.suppliers")
         | {{ proposal.suppliers[0].phone }}
 
       .list-span.mt-1
