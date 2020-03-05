@@ -1,4 +1,7 @@
 <style scoped lang="scss">
+  .container .card .container {
+    padding: 0;
+  }
 </style>
 
 <template lang="pug">
@@ -134,7 +137,6 @@
             if(this.seeProposals) {
               this.$http.get('/cooperative/biddings/' + this.biddingId + '/lots/' + this.lotId + '/lot_proposals', { params })
                 .then((response) => {
-                  debugger
                   this.proposals = response.data
                   this.proposalsCount = this.proposals.length
 
