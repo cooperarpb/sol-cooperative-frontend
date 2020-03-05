@@ -7,11 +7,11 @@
     padding: 2px 10px;
     position: absolute;
     right: 0;
-    top: -25px;
+    top: -28px;
     z-index: 2;
 
     font-size: 13px;
-    background-color: rgba(126, 211, 33, 0.7);
+    background-color: rgba(126, 211, 33, 0.9);
     color: white;
     border-radius: 15px;
     border-bottom-right-radius: 0;
@@ -50,10 +50,15 @@
 
   .danger-text {
     color: $danger-color;
+    margin-bottom:10px;
+    border: 1px dotted $danger-color;
+    padding: 5px;
   }
   
   .container {
     width: 100%;
+    margin-bottom: 20px;
+    padding: 0;
   }
 
   .span-inline-label {
@@ -108,7 +113,7 @@
           | {{ $t('.proposals.buttons.view') }}
 
       .proposal-actions.mt-1(v-else-if="proposal.status == 'coop_refused' || proposal.status == 'refused'")
-        span.danger-text
+        div.danger-text
           | {{ $t('.proposals.status.refused') }}
 
         router-link.mt-1.mb-0.button.ml-1(:to="showPath")
