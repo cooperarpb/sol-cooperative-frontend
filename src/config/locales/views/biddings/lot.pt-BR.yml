@@ -28,6 +28,7 @@ pt-BR:
 
         notifications:
           failure: Não foi possível criar o lote
+          failure_without_quantities: Não foi possível criar o lote. A quantidade de todos os itens do lote devem ser informadas.
           success: Lote criado com sucesso.
 
       show:
