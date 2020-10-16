@@ -1,7 +1,9 @@
 #!/bin/bash 
 
-RELEASE_DATE=$(date +%Y%m%d%H%M%S)
+yarn run build
 
-rsync -av --delete ./dist/ sol@10.70.0.46:/app/sol-cooperative-frontend/production/releases/$RELEASE_DATE
+DATE=$(date +%Y%m%d%H%M%S)
 
-ssh sol@10.70.0.46 "cd /app/sol-cooperative-frontend/production && unlink current && ln -s releases/$RELEASE_DATE/ current"
+rsync -av --delete ./dist/ sol@10.70.0.46:/app/sol-cooperative-frontend/production/releases/$DATE
+
+ssh sol@10.70.0.46 "cd /app/sol-cooperative-frontend/production && unlink current && ln -s releases/$DATE/ current"

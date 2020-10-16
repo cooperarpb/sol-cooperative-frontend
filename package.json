@@ -1,6 +1,6 @@
 {
   "name": "sol-cooperative-frontend.vue",
-  "version": "1.0.8",
+  "version": "1.0.11",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
