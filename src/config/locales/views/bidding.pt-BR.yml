@@ -33,10 +33,12 @@ pt-BR:
       button:
         submit: Salvar e definir itens da licitação
         submitting: Salvando...
+        address: Entregar na sede da entidade
 
       notifications:
         success: Licitação criada com sucesso
         failure: Houve um erro ao criar a licitação
+        missing_address: Endereço não cadastrado
 
     edit:
       button:

@@ -33,10 +33,12 @@
       button:
         submit: Save and define procurement process items
         submitting: Saving...
+        address: Deliver at headquarters
 
       notifications:
         success: Procurement process successfully created
         failure: An error occurred when creating the procurement process
+        missing_address: Address not registered
 
     edit:
       button:
