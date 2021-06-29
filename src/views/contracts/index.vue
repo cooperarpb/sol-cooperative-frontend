@@ -4,6 +4,10 @@
   }
 
   .badge {
+    &.unsigned_by_supplier {
+      background-color: $purple;
+    }
+
     &.waiting_signature {
       background-color: $greyish-brown;
     }
