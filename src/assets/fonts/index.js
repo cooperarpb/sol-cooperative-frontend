@@ -1,4 +1,4 @@
 // making fonts available to Webpack
 
 // SAMPLE:
-import "./custom-fonts.scss";
+import './custom-fonts.css';

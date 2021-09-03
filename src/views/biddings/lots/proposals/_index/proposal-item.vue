@@ -7,11 +7,11 @@
     padding: 2px 10px;
     position: absolute;
     right: 0;
-    top: -10px;
+    top: -28px;
     z-index: 2;
 
     font-size: 13px;
-    background-color: rgba(126, 211, 33, 0.7);
+    background-color: rgba(126, 211, 33, 0.9);
     color: white;
     border-radius: 15px;
     border-bottom-right-radius: 0;
@@ -48,6 +48,22 @@
 
   .danger-text {
     color: $danger-color;
+    margin-bottom:10px;
+    border: 1px dotted $danger-color;
+    padding: 5px;
+  }
+
+  .container {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
+  .span-inline-label {
+    display: block;
+    font-weight: normal;
+    font-size: 80%;
+    color: $greyish-brown-two;
   }
 </style>
 
@@ -62,8 +78,15 @@
       .list-title(v-else)
         | {{ $t('.proposals.proposal') }} {{ index+1 }}
 
-      span.list-span
-        | {{ $t('.total', { value: $asCurrency(proposal.price_total) }) }}
+      .list-span.mt-0(v-if="proposal.status != 'sent' && proposal.suppliers")
+        | {{ proposal.suppliers[0].email }}
+      
+      .list-span.mt-0(v-if="proposal.status != 'sent' && proposal.suppliers")
+        | {{ proposal.suppliers[0].phone }}
+
+      .list-span.mt-1
+        span.span-inline-label {{ $t('.total', { value: '' }) }}
+        | {{ $asCurrency(proposal.price_total) }}
 
       .proposal-actions.mt-1(v-if="proposal.current")
         .button.button-danger.button-refuse-proposal(@click="toggleRefuseOverlay(proposal)")
@@ -86,7 +109,7 @@
           | {{ $t('.proposals.buttons.view') }}
 
       .proposal-actions.mt-1(v-else-if="proposal.status == 'coop_refused' || proposal.status == 'refused'")
-        span.danger-text
+        div.danger-text
           | {{ $t('.proposals.status.refused') }}
 
         router-link.button.ml-1(:to="showPath")
