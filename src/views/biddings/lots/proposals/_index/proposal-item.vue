@@ -1,6 +1,10 @@
 <style scoped lang="scss">
   .list-item {
     position: relative;
+
+    .list-title, .list-span {
+      padding: 0 30px;
+    }
   }
 
   .lowest-badge {
