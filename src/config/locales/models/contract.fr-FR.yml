@@ -17,6 +17,8 @@
         bidding_title: Appel d'offres
         provider_title: Fournisseur
 
+        inexecutionReason: Raison (obligatoire)
+
         statuses:
           waiting_signature: En attente du fournisseur
           signed: Signé

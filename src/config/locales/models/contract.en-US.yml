@@ -17,6 +17,8 @@
         bidding_title: Procurement process
         provider_title: Vendor
 
+        inexecutionReason: Reason (Required)
+
         statuses:
           waiting_signature: Awaiting vendor
           signed: Signed

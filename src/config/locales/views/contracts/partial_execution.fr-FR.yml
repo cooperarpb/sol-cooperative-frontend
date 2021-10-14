@@ -2,6 +2,8 @@
   contracts:
     partial_execution:
       edit:
+        inexecution_reason_label: Raison (obligatoire)
+
         item:
           title: Elément de coût
           total_quantity: Quantité soumise
