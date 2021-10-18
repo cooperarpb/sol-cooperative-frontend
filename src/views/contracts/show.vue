@@ -36,6 +36,22 @@
     }
   } 
 
+
+  #view {
+    button.button-primary {
+      &.inactive {
+        background-color: $brownish-grey;
+        border-color: $brownish-grey;
+  
+        &:hover {
+          background-color: $brownish-grey;
+          border-color: $brownish-grey;
+          color: $white
+        }
+      }
+    }
+  }
+
 </style>
 
 <template lang="pug">
@@ -165,8 +181,16 @@
               .alert.alert-info
                 | {{ $t('.total_inexecution.' + picked + '.description') }}
 
+              form(ref="form", method="patch", @submit.prevent="submit")
+
+                textarea-field.mb-0(
+                  type="text",
+                  v-model="contract.inexecution_reason",
+                  name="contract[inexecution_reason]"
+                )
+
               .text-center.mt-2
-                button.button.button-primary(@click="totalInexecution", :disabled="totalInexecuting")
+                button.button.button-primary(@click="totalInexecution", :disabled="isSubmitButtonDisabled", :class="{inactive: isSubmitButtonDisabled}")
                   template(v-if="totalInexecuting")
                     i.fa.fa-spin.fa-spinner
                   template(v-else)
@@ -302,6 +326,18 @@
           { id: 'total_inexecution', text: this.$t('models.contract.attributes.statuses.total_inexecution') }
         ]
       },
+
+      isSubmitButtonDisabled() {
+        console.log(this.contract)
+        if (this.contract.inexecution_reason === undefined ||
+            this.contract.inexecution_reason === null ||
+            this.contract.inexecution_reason.replace(/\s/g,'') === '') {
+
+          return true
+        }
+
+        return false
+      },
     },
 
     methods: {
@@ -349,9 +385,10 @@
       },
 
       totalInexecution() {
+        const formData = new FormData(this.$refs.form)
         this.totalInexecuting = true
 
-        return this.$http.patch(this.totalInexecutionPath())
+        return this.$http.patch(this.totalInexecutionPath(), formData)
           .then((response) => {
             this.$notifications.clear()
             this.$notifications.info(this.$t('.notifications.total_inexecution.success'))
