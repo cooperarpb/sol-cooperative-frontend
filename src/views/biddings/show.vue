@@ -146,14 +146,16 @@
       .button.button-danger(@click="toggleCancelOverlay(bidding)" v-else-if="bidding.status != 'suspended' && bidding.status != 'canceled' && bidding.status != 'desert' && !(bidding.cancel_comment && !bidding.comment_response)")
         | {{ $t('.cancel.button') }}
 
-      .row
-        button.button-submit(v-if="canFinishFailureBidding" @click="showFailureOverlay = true")
-          | {{ $t('.failure.button') }}
-        button.button-submit(v-else-if="bidding.can_finish" @click="finishBidding", :disabled="finnishing")
-          template(v-if="finnishing")
-            i.fa.fa-spinner.fa-spin
-          template(v-else)
-            | {{ $t('.button.finish') }}
+      //- XXX: Conforme solicitação do item 9 do Ciclo 4, foi removido o botão de concluir licitação fracassada, pois a licitação
+      //- será fracassada automaticamente. O cósgio foi comentado ao invés de ser removido, caso o botão seja necessário novamente. 
+      //- .row
+      //-   button.button-submit(v-if="canFinishFailureBidding" @click="showFailureOverlay = true")
+      //-     | {{ $t('.failure.button') }}
+      //-   button.button-submit(v-else-if="bidding.can_finish" @click="finishBidding", :disabled="finnishing")
+      //-     template(v-if="finnishing")
+      //-       i.fa.fa-spinner.fa-spin
+      //-     template(v-else)
+      //-       | {{ $t('.button.finish') }}
 
     .card(v-if="bidding.cancel_comment")
       h5 {{ $t('.cancel.card.title') }}
@@ -241,24 +243,26 @@
           .button.button-danger(@click="cancel(cancelOverlayItem.id)")
             | {{ $t('.cancel.overlay.button.send') }}
 
-    overlay-wnd(v-if="showFailureOverlay", @close="showFailureOverlay = false")
-      .container
-        h4.mt-2.text-center {{ $t('.failure.overlay.title') }}
-        hr.mt-0.mb-2.o-container
+    //- XXX: Conforme solicitação do item 9 do Ciclo 4, foi removido o botão de concluir licitação fracassada, pois a licitação
+    //- será fracassada automaticamente. O cósgio foi comentado ao invés de ser removido, caso o botão seja necessário novamente. 
+    //- overlay-wnd(v-if="showFailureOverlay", @close="showFailureOverlay = false")
+    //-   .container
+    //-     h4.mt-2.text-center {{ $t('.failure.overlay.title') }}
+    //-     hr.mt-0.mb-2.o-container
 
-        .alert.alert-info
-          | {{ $t('.failure.overlay.alert', { title: this.bidding.title }) }}
+    //-     .alert.alert-info
+    //-       | {{ $t('.failure.overlay.alert', { title: this.bidding.title }) }}
 
-        textarea-field.mt-2(
-          v-model="comment",
-          name="comment",
-          :label="$t('.failure.overlay.field.comment.label')",
-          :error="errors.comment"
-        )
+    //-     textarea-field.mt-2(
+    //-       v-model="comment",
+    //-       name="comment",
+    //-       :label="$t('.failure.overlay.field.comment.label')",
+    //-       :error="errors.comment"
+    //-     )
 
-        .text-center.mt-2
-          .button.button-submit(@click="finishFailureBidding")
-            | {{ $t('.failure.overlay.button.send') }}
+    //-     .text-center.mt-2
+    //-       .button.button-submit(@click="finishFailureBidding")
+    //-         | {{ $t('.failure.overlay.button.send') }}
 
 </template>
 
