@@ -2,6 +2,8 @@
   contracts:
     partial_execution:
       edit:
+        inexecution_reason_label: Razón (Requerido)
+
         item:
           title: Ítem de costo
           total_quantity: Cantidad licitada
