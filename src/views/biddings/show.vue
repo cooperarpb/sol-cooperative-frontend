@@ -151,11 +151,12 @@
       //- .row
       //-   button.button-submit(v-if="canFinishFailureBidding" @click="showFailureOverlay = true")
       //-     | {{ $t('.failure.button') }}
-      //-   button.button-submit(v-else-if="bidding.can_finish" @click="finishBidding", :disabled="finnishing")
-      //-     template(v-if="finnishing")
-      //-       i.fa.fa-spinner.fa-spin
-      //-     template(v-else)
-      //-       | {{ $t('.button.finish') }}
+      .row
+        button.button-submit(v-if="bidding.can_finish" @click="finishBidding", :disabled="finnishing")
+          template(v-if="finnishing")
+            i.fa.fa-spinner.fa-spin
+          template(v-else)
+            | {{ $t('.button.finish') }}
 
     .card(v-if="bidding.cancel_comment")
       h5 {{ $t('.cancel.card.title') }}
