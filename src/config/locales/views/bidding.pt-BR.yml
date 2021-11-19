@@ -121,6 +121,9 @@ pt-BR:
         download: Baixar ATA
         not_found: ATA não disponível
 
+      inexecution_reason_minute:
+        download: Baixar ATA Final
+
       edict:
         download: Baixar Edital
         not_found: Edital não disponível

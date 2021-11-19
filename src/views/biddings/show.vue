@@ -130,6 +130,10 @@
         template(v-else)
           div {{ $t('.minute.not_found') }}
 
+        template(v-if="bidding.inexecution_reason_pdf")
+          a.button.u-full-width(:href="biddingInexecutionReasonAtaPath", download, target="_blank")
+            | {{ $t('.inexecution_reason_minute.download') }}
+
         template(v-if="bidding.edict_pdf")
           a.button.u-full-width(:href="biddingEdictPath", target="_blank")
             | {{ $t('.edict.download') }}
@@ -326,6 +330,10 @@
 
       biddingAtaPath() {
         return this.bidding && this.$http.host + "/" + this.bidding.minute_pdf
+      },
+
+      biddingInexecutionReasonAtaPath() {
+        return this.bidding && this.$http.host + "/" + this.bidding.inexecution_reason_pdf
       },
 
       biddingEdictPath() {

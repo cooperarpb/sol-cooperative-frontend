@@ -121,6 +121,9 @@
         download: Download MINUTES
         not_found: MINUTES not available
 
+      inexecution_reason_minute:
+        download: Download Final minutes
+
       edict:
         download: Download RFP
         not_found: RFP not available

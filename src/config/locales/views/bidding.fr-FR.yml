@@ -119,6 +119,9 @@
         download: Télécharger ATA
         not_found: ATA non disponible
 
+      inexecution_reason_minute:
+        download: Télécharger ATA final
+
       edict:
         download: Télécharger le Cahier des Charges
         not_found: Cahier des Charges non disponible

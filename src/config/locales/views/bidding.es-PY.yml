@@ -121,6 +121,9 @@
         download: Descargar ACTA
         not_found: ACTA no disponible
 
+      inexecution_reason_minute:
+        download: Descargar acta final
+
       edict:
         download: Descargar Edicto
         not_found: Edicto no disponible
