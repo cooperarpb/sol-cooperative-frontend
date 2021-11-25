@@ -17,6 +17,8 @@
         bidding_title: Licitación
         provider_title: Proveedor
 
+        inexecutionReason: Razón (Requerido)
+
         statuses:
           waiting_signature: A la espera de proveedor
           signed: Firmado
@@ -24,3 +26,4 @@
           partial_execution: Ejecutado parcialmente
           total_inexecution: Falta de ejecución total
           refused: Rechazado
+          unsigned_by_supplier: No firmado por el proveedor

@@ -24,6 +24,21 @@
       }
     }
   }
+
+  #view {
+    button.button-primary {
+      &.inactive {
+        background-color: $brownish-grey;
+        border-color: $brownish-grey;
+  
+        &:hover {
+          background-color: $brownish-grey;
+          border-color: $brownish-grey;
+          color: $white
+        }
+      }
+    }
+  }
 </style>
 
 <template lang="pug">
@@ -64,18 +79,23 @@
                   :error="errors[item.index] && errors[item.index]['quantity']"
                 )
 
-              hr.mt-0.mb-0.o-container
+              textarea-field.mb-0(
+                type="text",
+                v-model="contract.inexecution_reason",
+                name="contract[inexecution_reason]"
+              )
 
         button.button-primary.u-full-width(
           type="submit",
-          :disabled="submitting"
+          :disabled="isSubmitButtonDisabled",
+          :class="{inactive: isSubmitButtonDisabled}"
         )
           | {{ submitText }}
+
 </template>
 
 
 <script>
-
   export default {
     name: 'editPartialExecutionContract',
 
@@ -98,6 +118,17 @@
     },
 
     computed: {
+      isSubmitButtonDisabled() {
+        if (this.contract.inexecution_reason === undefined ||
+            this.contract.inexecution_reason === null ||
+            this.contract.inexecution_reason.replace(/\s/g,'') === '') {
+
+          return true
+        }
+
+        return false
+      },
+
       submitText() {
         if (this.submitting) return this.$t('.button.submitting')
         return this.$t('.button.submit')

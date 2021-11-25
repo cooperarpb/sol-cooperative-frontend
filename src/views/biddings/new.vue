@@ -71,6 +71,12 @@
           :error="errors.address"
         )
 
+        button.button-long.u-full-width(
+          type="button",
+          v-on:click="fillAddress()"
+        )
+          | {{ $t('.button.address') }}
+
         select-field(
           name="bidding[kind]",
           model="bidding",
@@ -129,7 +135,8 @@
         covenants: {},
         classifications: {},
         covenantsCount: null,
-        classificationsCount: null
+        classificationsCount: null,
+        headquarters: null
       }
     },
 
@@ -216,12 +223,35 @@
         this.$emit('tabChanged', this.tabs)
         this.$emit('navbarTitleChanged', this.$t('.title'))
       },
+
+      getHeadquarters() {
+        return this.$http.get('/cooperative/headquarters')
+          .then((response) => {
+            if(response.data === "") {
+              this.headquarters = null;
+            } else {
+              this.headquarters = response.data
+            }
+          }).catch((_err) => {
+            this.error = _err
+            console.error(_err)
+          })
+      },
+
+      fillAddress() {
+        if(this.headquarters == null) {
+          document.getElementById('bidding_address').placeholder = this.$t('.notifications.missing_address');
+        } else {
+          document.getElementById('bidding_address').value = this.headquarters;
+        }
+      }
     },
 
     created: function () {
       this.changeTabs()
       this.getClassifications()
       this.getCovenants()
+      this.getHeadquarters()
     }
   }
 
