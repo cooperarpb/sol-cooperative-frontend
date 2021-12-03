@@ -1,0 +1,17 @@
+pt-BR:
+  biddings:
+    lots:
+      lot_questions:
+        index:
+          waiting_answer: Aguardando resposta
+        edit:
+          button:
+            submit: Enviar
+            submitting: Enviando
+          form:
+            fields:
+              question_label: Pergunta
+              answer_label: Resposta
+          notifications:
+            success: Esclarecimento atualizado com sucesso
+            failure: Houve um erro ao atualizar o esclarecimento
