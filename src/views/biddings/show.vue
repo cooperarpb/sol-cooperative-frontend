@@ -151,7 +151,7 @@
         | {{ $t('.cancel.button') }}
 
       //- XXX: Conforme solicitação do item 9 do Ciclo 4, foi removido o botão de concluir licitação fracassada, pois a licitação
-      //- será fracassada automaticamente. O cósgio foi comentado ao invés de ser removido, caso o botão seja necessário novamente. 
+      //- será fracassada automaticamente. O código foi comentado ao invés de ser removido, caso o botão seja necessário novamente. 
       //- .row
       //-   button.button-submit(v-if="canFinishFailureBidding" @click="showFailureOverlay = true")
       //-     | {{ $t('.failure.button') }}
