@@ -2,7 +2,9 @@
 </style>
 
 <template lang="pug">
-  .container
+  .container.mt-2
+    | {{ lot_question.question }}
+
     form(ref="form", method="post", @submit.prevent="submit")
       textarea-field.mt-2(
         v-model="lot_question.answer",
@@ -29,7 +31,30 @@
         i18nScope: 'biddings.lots.lot_questions.edit',
         errors:  {},
         lot_question: {},
-        submitting: false
+        submitting: false,
+
+        tabs: [
+          {
+            route: { name: 'bidding', params: {} },
+            icon: 'fa-file',
+            text: this.$t('models.bidding.one'),
+            active: false,
+          },
+
+          {
+            route: { name: 'lots', params: { bidding_id: null } },
+            icon: 'fa-list',
+            text: this.$t('biddings.lots.index.tabs.lots'),
+            active: true,
+          },
+
+          {
+            route: { name: 'invites', params: {} },
+            icon: 'fa-envelope',
+            text: this.$t('biddings.lots.index.tabs.invites'),
+            active: false,
+          }
+        ]
       }
     },
 
@@ -41,6 +66,18 @@
     },
 
     methods: {
+      getLotQuestion() {
+        return this.$http.get('/cooperative/biddings/' + this.biddingId + '/lots/' + this.lotId + '/lot_questions/' + this.$route.params.id)
+          .then((response) => {
+            this.lot_question = response.data
+
+          }).catch((_err) => {
+            this.error = _err
+            console.error(_err)
+          })
+      },
+
+
       parseRoute() {
         this.biddingId = this.$params.asInteger(this.$route.params.bidding_id)
         this.lotId = this.$params.asInteger(this.$route.params.lot_id)
@@ -69,8 +106,23 @@
           })
       },
 
+      updateTabsRoutes() {
+        this.tabs[0].route.params = { id: this.biddingId }
+        this.tabs[1].route.params = { bidding_id: this.biddingId }
+        this.tabs[2].route.params = { bidding_id: this.biddingId, lot_id: this.lotId }
+
+        this.$emit('tabChanged', this.tabs)
+      },
+
+      updateTitle() {
+        this.$emit('navbarTitleChanged', this.$t('.title'))
+      },
+
       init() {
         this.parseRoute()
+        this.getLotQuestion()
+        this.updateTabsRoutes()
+        this.updateTitle()
       }
     },
 

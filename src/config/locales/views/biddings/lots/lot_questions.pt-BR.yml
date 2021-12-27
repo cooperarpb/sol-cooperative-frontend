@@ -3,8 +3,13 @@ pt-BR:
     lots:
       lot_questions:
         index:
+          title: Esclarecimentos
           waiting_answer: Aguardando resposta
+          no_lot_questions: Não há perguntas cadastradas
+
         edit:
+          title: Editar esclarecimento
+
           button:
             submit: Enviar
             submitting: Enviando
