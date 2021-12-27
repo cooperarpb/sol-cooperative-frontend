@@ -5,7 +5,7 @@
   .container.mt-2
     | {{ lot_question.question }}
 
-    form(ref="form", method="post", @submit.prevent="submit")
+    form(ref="form", method="post", @submit.prevent="confirmSubmit")
       textarea-field.mt-2(
         v-model="lot_question.answer",
         name="lot_question[answer]",
@@ -82,6 +82,26 @@
         this.biddingId = this.$params.asInteger(this.$route.params.bidding_id)
         this.lotId = this.$params.asInteger(this.$route.params.lot_id)
         this.lotQuestionId = this.$params.asInteger(this.$route.params.id)
+      },
+
+      confirmSubmit() {
+        let message = {
+          title: this.$t('.confirm.title'),
+          body: this.$t('.confirm.body')
+        }
+
+        let options = {
+          cancelText: this.$t('.dialog.back'),
+          okText: this.$t('.dialog.confirm')
+        }
+
+        this.$dialog.confirm(message, options)
+          .then((dialog) => {
+            this.submit()
+          })
+          .catch(function (err) {
+            console.log(err)
+          });
       },
 
       submit() {

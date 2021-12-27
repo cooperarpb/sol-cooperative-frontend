@@ -9,10 +9,17 @@ pt-BR:
 
         edit:
           title: Editar esclarecimento
+          confirm:
+            title: Deseja enviar a resposta?
+            body: Após o envio, a resposta não poderá ser alterada.
+          dialog:
+            back: Voltar
+            confirm: Enviar
 
           button:
             submit: Enviar
             submitting: Enviando
+
           form:
             fields:
               question_label: Pergunta
