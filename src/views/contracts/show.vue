@@ -332,7 +332,6 @@
       },
 
       isSubmitButtonDisabled() {
-        console.log(this.contract)
         if (this.contract.inexecution_reason === undefined ||
             this.contract.inexecution_reason === null ||
             this.contract.inexecution_reason.replace(/\s/g,'') === '') {

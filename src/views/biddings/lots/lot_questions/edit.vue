@@ -1,4 +1,18 @@
 <style scoped lang="scss">
+  #view {
+    button.button-submit {
+      &.inactive {
+        background-color: $brownish-grey;
+        border-color: $brownish-grey;
+  
+        &:hover {
+          background-color: $brownish-grey;
+          border-color: $brownish-grey;
+          color: $white
+        }
+      }
+    }
+  }
 </style>
 
 <template lang="pug">
@@ -17,7 +31,7 @@
 
       button.button-submit.button-long.u-full-width(
         type="submit",
-        :disabled="submitting"
+        :disabled="isSubmitButtonDisabled", :class="{inactive: isSubmitButtonDisabled}"
       )
         | {{ submitText }}
 </template>
@@ -62,7 +76,18 @@
       submitText() {
         if (this.submitting) return this.$t('.button.submitting')
         return this.$t('.button.submit')
-      }
+      },
+
+      isSubmitButtonDisabled() {
+        if (this.lot_question.answer === undefined ||
+            this.lot_question.answer === null ||
+            this.lot_question.answer.replace(/\s/g,'') === '') {
+
+          return true
+        }
+
+        return false
+      },
     },
 
     methods: {
@@ -76,7 +101,6 @@
             console.error(_err)
           })
       },
-
 
       parseRoute() {
         this.biddingId = this.$params.asInteger(this.$route.params.bidding_id)
