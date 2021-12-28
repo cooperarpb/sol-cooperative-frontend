@@ -5,7 +5,7 @@
   .container.mt-2
     .card.slim.mb-2(v-if="this.lotQuestionsCount > 0")
       ul.mb-0
-        li.list-item.row.p-1(v-for="lotQuestion in lotQuestions", key="lot_question.question", @click="editLotQuestionPath(lotQuestion)")
+        li.list-item.row.p-1(v-for="lotQuestion in lotQuestions", @click="editLotQuestionPath(lotQuestion)")
           .container
             .list-title
               | {{ lotQuestion.question }}
