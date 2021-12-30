@@ -323,12 +323,14 @@
       },
 
       statuses() {
-        return [
+        let statues_items = [
           { id: 'signed', text: this.$t('options.blank') },
           { id: 'completed', text: this.$t('models.contract.attributes.statuses.completed') },
           { id: 'partial_execution', text: this.$t('models.contract.attributes.statuses.partial_execution') },
           { id: 'total_inexecution', text: this.$t('models.contract.attributes.statuses.total_inexecution') }
         ]
+
+        return this.contract.lot_group_item_count === 1 ? statues_items.filter(item => item.id !== 'partial_execution') : statues_items
       },
 
       isSubmitButtonDisabled() {
