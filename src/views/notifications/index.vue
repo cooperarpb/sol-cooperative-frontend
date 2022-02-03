@@ -133,6 +133,7 @@
         if((/^(invite)/i).test(action)) return this.invitesRoute(notification)
         if((/^(proposal\.lot)/i).test(action)) return this.lotProposalsRoute(notification)
         if((/^(proposal)/i).test(action)) return this.globalProposalsRoute(notification)
+        if((/^(lot_question)/i).test(action)) return this.lotQuestionsRoute(notification)
       },
 
       contractRoute(notification) {
@@ -159,6 +160,12 @@
         let args = notification.args
 
         return { name: 'globalProposals', params: { bidding_id: args.bidding_id } }
+      },
+
+      lotQuestionsRoute(notification) {
+        let args = notification.args
+
+        return { name: 'LotQuestions', params: { bidding_id: args.bidding_id, lot_id: args.lot_id } }
       },
 
       clickedNotification(notification) {

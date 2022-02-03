@@ -37,6 +37,7 @@ pt-BR:
 
         button:
           proposals: Visualizar propostas
+          lot_questions: Esclarecimentos
 
         files:
           title: Arquivos do lote
