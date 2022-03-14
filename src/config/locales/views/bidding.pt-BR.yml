@@ -34,6 +34,8 @@ pt-BR:
         submit: Salvar e definir itens da licitação
         submitting: Salvando...
         address: Entregar na sede da entidade
+        add_child_classification: + Adicionar
+        remove_child_classification: Remover sublclassificação
 
       notifications:
         success: Licitação criada com sucesso

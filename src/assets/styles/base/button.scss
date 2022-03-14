@@ -8,6 +8,13 @@ button.button-primary.button-primary {
   border-color: rgba(37, 125, 167, 1);
 }
 
+button {
+  &.btn-block {
+    display: block;
+    width: 100%;
+  }
+}
+
 .button {
   &.button-submit {
   color: $white;
