@@ -79,11 +79,12 @@
                   :error="errors[item.index] && errors[item.index]['quantity']"
                 )
 
-              textarea-field.mb-0(
-                type="text",
-                v-model="contract.inexecution_reason",
-                name="contract[inexecution_reason]"
-              )
+          .card.mb-2
+            textarea-field.mb-0(
+              type="text",
+              v-model="contract.inexecution_reason",
+              name="contract[inexecution_reason]"
+            )
 
         button.button-primary.u-full-width(
           type="submit",
