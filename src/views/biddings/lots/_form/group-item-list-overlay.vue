@@ -14,6 +14,23 @@
     }
   }
 
+  ul.inner-list {
+    margin: 1.5rem 0 1.5rem 2rem;
+
+    li.list-item {
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      border-bottom: solid 1px #d8d8d8;
+      color: $danger-color;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  label.red {
+    color: $danger-color;
+  }
+
 </style>
 
 <template lang="pug">
@@ -70,6 +87,13 @@
             span
               | {{ $asNumber(group_item.available_quantity, { precision: 2 }) }} / {{ $asNumber(group_item.quantity, { precision: 2 }) }}
               | {{ group_item.item_unit }}
+
+            .item-container(v-if="group_item.covenant_draft_biddings_in_use.length > 0")
+              label.red.inline-block
+                | {{ $t('models.group_item.attributes.covenant_draft_biddings_in_use') }}:
+              ul.inner-list
+                li.list-item.mb-1.o-container(v-for="covenant_draft_bidding in group_item.covenant_draft_biddings_in_use")
+                  | {{ covenant_draft_bidding.description }}
 
           .container(v-if="group_item.used")
             .alert.alert-info

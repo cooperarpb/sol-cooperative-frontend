@@ -13,6 +13,7 @@
         estimated_cost: Coût estimé
         estimatedCost: Coût estimé
         groupName: Groupe
+        covenant_draft_biddings_in_use: Rédiger des offres à l'aide de l'élément
 
       errors:
         item:
