@@ -55,6 +55,9 @@
       .button.u-full-width.button-add-item(@click="toggleOverlay" v-if="! hideAddItemButton")
         | {{ $t('.items.buttons.add') }}
 
+      .button.u-full-width.button-add-group(@click="toggleGroupOverlay" v-if="! hideAddGroupButton")
+        | {{ $t('.items.buttons.add_group') }}
+
       div.alert.alert-danger.mb-2(v-if="errors.lot_group_items")
         | {{ errors.lot_group_items }}. {{ $t('.items.alerts.minimum') }}
 
@@ -91,11 +94,14 @@
 
     group-item-list-overlay(:showOverlay="showOverlay", :covenantId="covenantId", :lot_group_items="lot_group_items", @closeOverlay="showOverlay = false")
 
+    group-list-overlay(:showGroupOverlay="showGroupOverlay", :covenantId="covenantId", :lot_group_items="lot_group_items", @closeGroupOverlay="showGroupOverlay = false")
+
 </template>
 
 <script>
   import GroupItemListOverlay from './group-item-list-overlay'
   import GroupItemOverlay from './group-item-overlay'
+  import GroupListOverlay from './group-list-overlay'
 
   export default {
     props: {
@@ -107,7 +113,8 @@
 
     components: {
       GroupItemListOverlay,
-      GroupItemOverlay
+      GroupItemOverlay,
+      GroupListOverlay
     },
 
     data() {
@@ -116,12 +123,17 @@
         showOverlayInfo: false,
         overlayItem: null,
         showOverlay: false,
+        showGroupOverlay: false
       }
     },
 
     computed: {
       hideAddItemButton() {
         return (this.bidding && this.bidding.kind == 'unitary' && this.countActiveLotGroupItems >= 1) || this.nullCovenant
+      },
+
+      hideAddGroupButton() {
+        return (this.bidding && this.bidding.kind == 'unitary') || this.nullCovenant
       },
 
       covenantId() {
@@ -185,6 +197,10 @@
       toggleOverlay() {
         this.showOverlay = true
       },
+
+      toggleGroupOverlay() {
+        this.showGroupOverlay = true
+      }
 
     }
   }
