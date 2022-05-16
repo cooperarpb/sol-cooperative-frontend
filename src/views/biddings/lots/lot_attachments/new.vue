@@ -1,0 +1,163 @@
+<style scoped lang="scss">
+  #view {
+    button.button-submit {
+      &.inactive {
+        background-color: $brownish-grey;
+        border-color: $brownish-grey;
+  
+        &:hover {
+          background-color: $brownish-grey;
+          border-color: $brownish-grey;
+          color: $white
+        }
+      }
+    }
+  }
+</style>
+
+<template lang="pug">
+.container.mt-2
+  form(ref="form", method="post", @submit.prevent="confirmSubmit")
+    textarea-field.mt-2(
+      v-model="notification_message",
+      name="notification_message",
+      :label="$t('.form.fields.notification_message')",
+      :error="errors.notification_message",
+      require=true,
+      :rows="10"
+    )
+
+    button.button-submit.button-long.u-full-width(
+      type="submit",
+      :disabled="isSubmitButtonDisabled", :class="{inactive: isSubmitButtonDisabled}"
+    )
+      | {{ submitText }}
+</template>
+
+<script>
+  export default {
+    name: 'newLotAttachmentResquest',
+
+    data () {
+      return {
+        i18nScope: 'biddings.lots.lot_attachments.new',
+        errors:  {},
+        notification_message: '',
+        submitting: false,
+
+        tabs: [
+          {
+            route: { name: 'bidding', params: {} },
+            icon: 'fa-file',
+            text: this.$t('models.bidding.one'),
+            active: false,
+          },
+
+          {
+            route: { name: 'lots', params: { bidding_id: null } },
+            icon: 'fa-list',
+            text: this.$t('biddings.lots.index.tabs.lots'),
+            active: true,
+          },
+
+          {
+            route: { name: 'invites', params: {} },
+            icon: 'fa-envelope',
+            text: this.$t('biddings.lots.index.tabs.invites'),
+            active: false,
+          }
+        ]
+      }
+    },
+
+    computed: {
+      submitText() {
+        if (this.submitting) return this.$t('.button.submitting')
+        return this.$t('.button.submit')
+      },
+
+      isSubmitButtonDisabled() {
+        if (this.notification_message === undefined ||
+            this.notification_message === null ||
+            this.notification_message.replace(/\s/g,'') === '') {
+
+          return true
+        }
+
+        return false
+      },
+    },
+
+    methods: {
+      parseRoute() {
+        this.biddingId = this.$params.asInteger(this.$route.params.bidding_id)
+        this.lotId = this.$params.asInteger(this.$route.params.lot_id)
+      },
+
+      confirmSubmit() {
+        let message = {
+          title: this.$t('.confirm.title'),
+          body: this.$t('.confirm.body')
+        }
+
+        let options = {
+          cancelText: this.$t('.dialog.back'),
+          okText: this.$t('.dialog.confirm')
+        }
+
+        this.$dialog.confirm(message, options)
+          .then((dialog) => {
+            this.submit()
+          })
+          .catch(function (err) {
+            console.log(err)
+          });
+      },
+
+      submit() {
+        const formData = new FormData(this.$refs.form)
+        this.submitting = true
+
+        this.$http.post('/cooperative/biddings/' + this.biddingId + '/lots/' + this.lotId + '/lot_attachments/request_lot_attachment', formData)
+          .then((response) => {
+            this.$notifications.clear()
+            this.errors = {}
+
+            this.$router.replace({ name: 'LotAttachments', params: { bidding_id: this.biddingId, lot_id: this.lotId } })
+          })
+          .catch((err) => {
+            let errors = _.dig(err, 'response', 'data', 'errors') || {}
+
+            this.$notifications.error(this.$t('.notifications.failure'))
+            this.errors = this.$i18n.errify(errors, { model: 'lot_attachment' })
+          })
+          .then(() => {
+            this.submitting = false
+          })
+      },
+
+      updateTabsRoutes() {
+        this.tabs[0].route.params = { id: this.biddingId }
+        this.tabs[1].route.params = { bidding_id: this.biddingId }
+        this.tabs[2].route.params = { bidding_id: this.biddingId, lot_id: this.lotId }
+
+        this.$emit('tabChanged', this.tabs)
+      },
+
+      updateTitle() {
+        this.$emit('navbarTitleChanged', this.$t('.title'))
+      },
+
+      init() {
+        this.parseRoute()
+        this.updateTabsRoutes()
+        this.updateTitle()
+      }
+    },
+
+    created: function () {
+      this.init();
+    }
+  }
+
+</script>

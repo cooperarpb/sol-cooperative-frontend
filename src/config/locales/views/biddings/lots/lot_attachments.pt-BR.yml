@@ -1,0 +1,30 @@
+pt-BR:
+  biddings:
+    lots:
+      lot_attachments:
+        index:
+          title: Anexos
+          no_lot_attachments: Não há anexos cadastrados
+          button:
+            new_request: Solicitar anexo
+
+        new:
+          title: Solicitar anexos
+          confirm:
+            title: Deseja enviar a solicitação?
+            body: Uma notificação será enviada ao fornecedor.
+          dialog:
+            back: Voltar
+            confirm: Enviar
+
+          button:
+            submit: Enviar
+            submitting: Enviando
+
+          form:
+            fields:
+              notification_message: Mensagem
+
+          notifications:
+            success: Mensagem enviada com sucesso
+            failure: Houve um erro ao enviar a mensagem

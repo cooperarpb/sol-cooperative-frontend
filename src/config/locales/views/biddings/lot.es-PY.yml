@@ -36,6 +36,7 @@
 
         button:
           proposals: Ver propuestas
+          lot_attachments: Archivos adjuntos
 
         files:
           title: Archivos del lote

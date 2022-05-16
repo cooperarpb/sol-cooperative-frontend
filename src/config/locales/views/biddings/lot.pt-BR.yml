@@ -38,6 +38,7 @@ pt-BR:
         button:
           proposals: Visualizar propostas
           lot_questions: Esclarecimentos
+          lot_attachments: Anexos
 
         files:
           title: Arquivos do lote

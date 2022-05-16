@@ -1,0 +1,30 @@
+en-US:
+   biddings:
+     lots:
+       lot_attachments:
+         index:
+           title: Attachments
+           no_lot_attachments: There are no attachments registered
+           button:
+             new_request: Request attachment
+
+         new:
+           title: Request attachments
+           confirm:
+             title: Do you want to submit the request?
+             body: A notification will be sent to the supplier.
+           dialog:
+             back: back
+             confirm: send
+
+           button:
+             submit: submit
+             submitting: sending
+
+           form:
+             fields:
+               notification_message: Message
+
+           notifications:
+             success: Message sent successfully
+             failure: There was an error sending the message

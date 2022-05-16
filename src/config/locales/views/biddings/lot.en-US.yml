@@ -10,6 +10,7 @@
           new: Add lot
           proposals: View proposals
           finish: Complete and submit for clearance
+          lot_attachments: Attachments
 
         tabs:
           lots: Lots and items

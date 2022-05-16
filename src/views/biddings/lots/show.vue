@@ -85,6 +85,9 @@
       router-link.button.button-primary.router-link.mt-4.mb-0.u-full-width(:to="{ name: 'LotQuestions', params: { bidding_id: this.biddingId, lot_id: this.params.id } }")
         | {{ $t('.button.lot_questions') }}
 
+      router-link.button.button-primary.router-link.mt-4.mb-0.u-full-width(:to="{ name: 'LotAttachments', params: { bidding_id: this.biddingId, lot_id: this.params.id } }")
+        | {{ $t('.button.lot_attachments') }}
+
 </template>
 
 <script>
