@@ -127,7 +127,7 @@
         :name="name",
         :placeholder="placeholder",
         :value="value",
-        @change="onChangeEvent"
+        @change="$emit('input', onChangeEvent($event.target.value))"
       )
         option(v-for="option in options", :value="option.id") {{ option.text }}
         slot
@@ -163,9 +163,11 @@
           }
         }
       },
-      onChangeEvent() {
+      onChangeEvent(aValue) {
         if (this.onChangeEventMethod) {
           this.onChangeEventMethod()
+        } else {
+          return this.cast(aValue)
         }
       }
     },
