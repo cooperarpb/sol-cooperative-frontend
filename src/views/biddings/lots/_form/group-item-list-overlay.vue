@@ -92,8 +92,8 @@
               label.red.inline-block
                 | {{ $t('models.group_item.attributes.covenant_draft_biddings_in_use') }}:
               ul.inner-list
-                li.list-item.mb-1.o-container(v-for="covenant_draft_bidding in group_item.covenant_draft_biddings_in_use")
-                  | {{ covenant_draft_bidding.description }}
+                li.list-item.mb-1.o-container
+                  | {{ group_item.covenant_draft_biddings_in_use }}
 
           .container(v-if="group_item.used")
             .alert.alert-info
