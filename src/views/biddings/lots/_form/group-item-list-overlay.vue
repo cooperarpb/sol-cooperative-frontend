@@ -34,12 +34,12 @@
 </style>
 
 <template lang="pug">
-  overlay-wnd(v-if="showOverlay", @close="closeOverlay", @open="fetchSearch")
+  overlay-wnd(v-if="showOverlay", @close="closeOverlay")
     .container
       h4.mt-2.text-center {{ $t('.title') }}
       hr.mt-0.mb-2.o-container
 
-      form.filter(ref="formSearch", method="get" action="" @submit.prevent="fetchSearch")
+      form.filter(ref="formSearch", method="get" @submit.prevent="fetchSearch")
         .search-field
           input-field(
             type="text",
@@ -169,7 +169,7 @@
             this.group_items = response.data
             this.groupItemsCount = this.group_items.length
 
-            this.updatePagination(response)  
+            this.updatePagination(response)
 
             let activeLotGroupItems = this.lot_group_items.filter((item) => {
               if(!item._destroy) {
@@ -188,12 +188,21 @@
             })
 
             this.isLoadingOverlay = false
-
           }).catch((_err) => {
             this.error = _err
             console.error(_err)
           })
+      },
 
+      updatePagination(aResponse) {
+        this.page = aResponse.headers['x-page']
+        this.totalPages = aResponse.headers['x-total']
+        let links = parseLinkHeaders(aResponse.headers.link) || {}
+
+        this.firstPageLink = _.dig(links, 'first', 'page')
+        this.prevPageLink = _.dig(links, 'prev', 'page')
+        this.nextPageLink = _.dig(links, 'next', 'page')
+        this.lastPageLink = _.dig(links, 'last', 'page')
       },
 
       updatePagination(aResponse) {
@@ -261,6 +270,4 @@
         this.params = Object.assign({}, this.params, { page: this.page });
       }
     }
-
-  }
 </script>
