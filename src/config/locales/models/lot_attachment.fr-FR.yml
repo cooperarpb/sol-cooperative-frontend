@@ -1,0 +1,12 @@
+fr-FR:
+  models:
+    lot_attachment:
+      one: Pièce jointe
+      other: Pièces jointes
+
+      attributes:
+        notification_message: Message
+
+      errors:
+        notification_message:
+          missing: Le message ne peut pas être vide

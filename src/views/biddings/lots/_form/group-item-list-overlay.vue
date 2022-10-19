@@ -14,6 +14,23 @@
     }
   }
 
+  ul.inner-list {
+    margin: 1.5rem 0 1.5rem 2rem;
+
+    li.list-item {
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      border-bottom: solid 1px #d8d8d8;
+      color: $danger-color;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  label.red {
+    color: $danger-color;
+  }
+
 </style>
 
 <template lang="pug">
@@ -71,6 +88,13 @@
               | {{ $asNumber(group_item.available_quantity, { precision: 2 }) }} / {{ $asNumber(group_item.quantity, { precision: 2 }) }}
               | {{ group_item.item_unit }}
 
+            .item-container(v-if="group_item.covenant_draft_biddings_in_use.length > 0")
+              label.red.inline-block
+                | {{ $t('models.group_item.attributes.covenant_draft_biddings_in_use') }}:
+              ul.inner-list
+                li.list-item.mb-1.o-container
+                  | {{ group_item.covenant_draft_biddings_in_use }}
+
           .container(v-if="group_item.used")
             .alert.alert-info
               | {{ $t('.already_in_the_current_lot') }}
@@ -81,9 +105,20 @@
           .container
             | {{ $t('.empty') }}
 
+      .row
+        .twelve.columns
+          paginator(
+            v-model="page",
+            :prev="prevPageLink",
+            :next="nextPageLink",
+            v-if="groupItemsCount"
+          )
+
 </template>
 
 <script>
+  import parseLinkHeaders from "parse-link-header";
+
   export default {
     props: {
       showOverlay: { type: Boolean, default: false },
@@ -98,7 +133,22 @@
         group_items: null,
         groupItemsCount: 0,
         isLoadingOverlay: true,
+        params: {},
+
+        // pagination
+        page: 1,
+        firstPageLink: '',
+        prevPageLink:  '',
+        nextPageLink:  '',
+        lastPageLink:  '',
+        totalPages:    1,
       }
+    },
+
+    computed: {
+      fetchParams() {
+        return this.params
+      },
     },
 
     methods: {
@@ -108,18 +158,18 @@
       },
 
       fetchSearch() {
-        this.getGroupItems({ search: this.search })
+        this.getGroupItems({ page: this.page, search: this.search })
       },
 
       getGroupItems(oParams) {
         this.isLoadingOverlay = true
 
-        let params = oParams
-
-        return this.$http.get('/cooperative/covenants/' + this.covenantId + '/group_items', { params })
+        return this.$http.get(`/cooperative/covenants/${this.covenantId}/group_items`, { params: oParams })
           .then((response) => {
             this.group_items = response.data
             this.groupItemsCount = this.group_items.length
+
+            this.updatePagination(response)  
 
             let activeLotGroupItems = this.lot_group_items.filter((item) => {
               if(!item._destroy) {
@@ -144,6 +194,16 @@
             console.error(_err)
           })
 
+      },
+
+      updatePagination(aResponse) {
+        this.page = aResponse.headers['x-page']
+        this.totalPages = aResponse.headers['x-total']
+        let links = parseLinkHeaders(aResponse.headers.link) || {}
+        this.firstPageLink = _.dig(links, 'first', 'page')
+        this.prevPageLink = _.dig(links, 'prev', 'page')
+        this.nextPageLink = _.dig(links, 'next', 'page')
+        this.lastPageLink = _.dig(links, 'last', 'page')
       },
 
       addLotGroupItem: function(group_item) {
@@ -183,8 +243,24 @@
           this.lot_group_items.push(addParams)
         }
       },
+
+      init() {
+        this.params = this.$route.query
+      }
     },
 
+    created: function () {
+      this.init();
+    },
+
+    watch: {
+      fetchParams() {
+        this.fetchSearch()
+      },
+      page() {
+        this.params = Object.assign({}, this.params, { page: this.page });
+      }
+    }
 
   }
 </script>

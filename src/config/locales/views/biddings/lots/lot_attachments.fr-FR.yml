@@ -1,0 +1,30 @@
+fr-FR:
+  biddings:
+    lots:
+      lot_attachments:
+        index:
+          title: Pièces jointes
+          no_lot_attachments: Il n'y a pas de pièces jointes enregistrées
+          button:
+            new_request: Demande de pièce jointe
+
+        new:
+          title: Demander des pièces jointes
+          confirm:
+            title: Voulez-vous soumettre la demande ?
+            body: Une notification sera envoyée au fournisseur.
+          dialog:
+            back: Retour
+            confirm: Envoyer
+
+          button:
+            submit: Soumettre
+            submitting: Envoi
+
+          form:
+            fields:
+              notification_message: Message
+
+          notifications:
+            success: Message envoyé avec succès
+            failure: Une erreur s'est produite lors de l'envoi du message

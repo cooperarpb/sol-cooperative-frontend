@@ -43,6 +43,9 @@ import GlobalProposal from '@/views/biddings/proposals/show.vue'
 import LotQuestions from '@/views/biddings/lots/lot_questions/index.vue'
 import EditLotQuestion from '@/views/biddings/lots/lot_questions/edit.vue'
 
+import LotAttachments from '@/views/biddings/lots/lot_attachments/index.vue'
+import NewLotAttachmentRequest from '@/views/biddings/lots/lot_attachments/new.vue'
+
 const namespace = null
 
 const routes = [
@@ -387,6 +390,27 @@ const routes = [
     }
   },  
 
+  {
+    name:      'LotAttachments',
+    path:      '/biddings/:bidding_id/lots/:lot_id/lot_attachments/index',
+    component: LotAttachments,
+    meta:      {
+      auth:       true,
+      back:       true,
+      transition: { name: 'slide-left' }
+    }
+  },
+
+  {
+    name:      'NewLotAttachmentRequest',
+    path:      '/biddings/:bidding_id/lots/:lot_id/lot_attachments/new',
+    component: NewLotAttachmentRequest,
+    meta:      {
+      auth:       true,
+      back:       true,
+      transition: { name: 'slide-left' }
+    }
+  },
   // TODO componetnes específicos para rotas específicas!
   // Rails tem ErrorsController, com páginas dinâmicas em rotas específicas:
   // /401 - unauthorized (não autenticado)

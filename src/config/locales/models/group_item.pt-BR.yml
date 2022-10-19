@@ -13,6 +13,7 @@ pt-BR:
         estimated_cost: Custo estimado
         estimatedCost: Custo estimado
         groupName: Grupo
+        covenant_draft_biddings_in_use: Licitações em rascunho utilizando o item
 
       errors:
         item:

@@ -36,6 +36,7 @@
 
         button:
           proposals: Exhiber offres
+          lot_attachments: Pièces jointes
 
         files:
           title: Fichiers du lot

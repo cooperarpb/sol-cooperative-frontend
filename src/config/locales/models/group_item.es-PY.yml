@@ -13,6 +13,7 @@
         estimated_cost: Valor estimado
         estimatedCost: Valor estimado
         groupName: Grupo
+        covenant_draft_biddings_in_use: Borrador de Licitación usando el artículo
 
       errors:
         item:

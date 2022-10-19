@@ -9,7 +9,8 @@
         name: Nombre del grupo
         group_items_count: Total de ítems de costo
         items: Ítems de costo
-
+        items_added: Ítems agregados
+        
       errors:
         name:
           missing: El nombre no puede quedar en blanco
