@@ -231,7 +231,7 @@
               alreadyAdd = true
             }
           }
-        });
+        })
 
         if(!alreadyAdd) {
           let addParams = {
@@ -270,4 +270,5 @@
         this.params = Object.assign({}, this.params, { page: this.page });
       }
     }
+  }
 </script>
