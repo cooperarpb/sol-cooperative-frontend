@@ -54,7 +54,7 @@
             i.fas.fa-spinner.fa-pulse.fa-2x
 
       ul(v-else-if="groupsCount > 0")
-        li.list-item.mb-1.o-container.row(v-for="(group) in groups" @click="addGroupItems(group)")
+        li.list-item.mb-1.o-container.row(v-for="(group, index) in groups" :key="index" @click="checkUsedGroupAndAddGroupItem(group)")
           .container(:class="group.used ? 'used' : 'not-used'")
             .group-container
               label.inline-block
@@ -84,9 +84,20 @@
           .container
             | {{ $t('.empty') }}
 
+      .row
+        .twelve.columns
+          paginator(
+            v-model="page",
+            :prev="prevPageLink",
+            :next="nextPageLink",
+            v-if="groupsCount"
+          )
+
 </template>
 
 <script>
+  import parseLinkHeaders from "parse-link-header";
+
   export default {
     props: {
       showGroupOverlay: { type: Boolean, default: false },
@@ -101,17 +112,40 @@
         groups: null,
         groupsCount: 0,
         isLoadingOverlay: true,
+        params: {},
+
+        // pagination
+        page: 1,
+        firstPageLink: '',
+        prevPageLink:  '',
+        nextPageLink:  '',
+        lastPageLink:  '',
+        totalPages:    1,
       }
     },
 
+    computed: {
+      fetchParams() {
+        return this.params
+      },
+    },
+
     methods: {
+      checkUsedGroupAndAddGroupItem(group) {
+        if (group.used) {
+          return
+        }
+
+        this.addGroupItems(group)
+      },
+
       closeGroupOverlay() {
         this.search = ''
         this.$emit('closeGroupOverlay')
       },
 
       fetchSearch() {
-        this.getGroups({ search: this.search })
+        this.getGroups({ page: this.page, search: this.search })
       },
 
       getGroups(oParams) {
@@ -125,6 +159,8 @@
               return group.group_items_count > 0
             })
             this.groupsCount = this.groups.length
+
+            this.updatePagination(response)
 
             for(let [index, group] of this.groups.entries()) {
               let currentGroupLength = 0;
@@ -173,12 +209,20 @@
 
       },
 
+      updatePagination(aResponse) {
+        this.page = aResponse.headers['x-page']
+        this.totalPages = aResponse.headers['x-total']
+        let links = parseLinkHeaders(aResponse.headers.link) || {}
+        this.firstPageLink = _.dig(links, 'first', 'page')
+        this.prevPageLink = _.dig(links, 'prev', 'page')
+        this.nextPageLink = _.dig(links, 'next', 'page')
+        this.lastPageLink = _.dig(links, 'last', 'page')
+      },
+
       addGroupItems: function(group) {
-        return this.$http.get('/cooperative/covenants/' + group.covenant_id + '/group_items')
+        return this.$http.get('/cooperative/groups/' + group.id + '/group_items')
           .then((response) => {
-            let groupItems = response.data.filter((groupItem) => {
-              return groupItem.group_id == group.id
-            })
+            let groupItems = response.data
 
             for(let currentItem of groupItems) {
               let alreadyAdd = false
@@ -219,8 +263,23 @@
             console.error(_err)
           })
       },
+
+      init() {
+        this.params = this.$route.query
+      }
     },
 
+    created: function () {
+      this.init();
+    },
 
+    watch: {
+      fetchParams() {
+        this.fetchSearch()
+      },
+      page() {
+        this.params = Object.assign({}, this.params, { page: this.page });
+      }
+    }
   }
 </script>
