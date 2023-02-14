@@ -33,10 +33,14 @@ pt-BR:
       button:
         submit: Salvar e definir itens da licitação
         submitting: Salvando...
+        address: Entregar na sede da entidade
+        add_child_classification: Adicionar
+        remove_child_classification: Remover sublclassificação
 
       notifications:
         success: Licitação criada com sucesso
         failure: Houve um erro ao criar a licitação
+        missing_address: Endereço não cadastrado
 
     edit:
       button:
@@ -118,6 +122,9 @@ pt-BR:
       minute:
         download: Baixar ATA
         not_found: ATA não disponível
+
+      inexecution_reason_minute:
+        download: Baixar ATA Final
 
       edict:
         download: Baixar Edital

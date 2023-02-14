@@ -33,10 +33,12 @@
       button:
         submit: Guardar y definir ítems de la licitación
         submitting: Guardando...
+        address: Entregar a la sede
 
       notifications:
         success: Licitación creada con éxito
         failure: Hubo un error al crear la licitación
+        missing_address: Dirección no registrada
 
     edit:
       button:
@@ -118,6 +120,9 @@
       minute:
         download: Descargar ACTA
         not_found: ACTA no disponible
+
+      inexecution_reason_minute:
+        download: Descargar acta final
 
       edict:
         download: Descargar Edicto

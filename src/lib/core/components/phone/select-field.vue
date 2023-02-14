@@ -127,7 +127,7 @@
         :name="name",
         :placeholder="placeholder",
         :value="value",
-        @change="$emit('input', cast($event.target.value))",
+        @change="$emit('input', onChangeEvent($event.target.value))"
       )
         option(v-for="option in options", :value="option.id") {{ option.text }}
         slot
@@ -144,7 +144,8 @@
 
     // propriedades extras e/ou sobrecarregadas
     props: {
-      options: null
+      options: null,
+      onChangeEventMethod: null
     },
 
     methods: {
@@ -160,6 +161,13 @@
           default: {
             return value
           }
+        }
+      },
+      onChangeEvent(aValue) {
+        if (this.onChangeEventMethod) {
+          this.onChangeEventMethod()
+        } else {
+          return this.cast(aValue)
         }
       }
     },

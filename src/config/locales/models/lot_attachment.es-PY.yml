@@ -1,0 +1,12 @@
+es-PY:
+  models:
+    lot_attachment:
+      one: Archivo adjunto
+      other: Archivos adjuntos
+
+      attributes:
+        notification_message: Mensaje
+
+      errors:
+        notification_message:
+          missing: El mensaje no puede estar en blanco

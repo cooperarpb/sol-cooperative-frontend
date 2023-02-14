@@ -1,0 +1,12 @@
+pt-BR:
+  models:
+    lot_attachment:
+      one: Anexo
+      other: Anexos
+
+      attributes:
+        notification_message: Mensagem
+
+      errors:
+        notification_message:
+          missing: Mensagem não pode ficar em branco

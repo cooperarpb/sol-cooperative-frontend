@@ -78,7 +78,25 @@
           })
       },
 
+      isItemsHasQuantityNotEmptyAndGreaterThanZero() {
+        let isValid = true
+        this.lot_group_items.forEach((item) => {
+          if (item._destroy === false) {
+            if (item.quantity === null || item.quantity === '' || Number(item.quantity) === 0) {
+              isValid = false
+            }
+          }
+        })
+
+        return isValid
+      },
+
       submit() {
+        if (!this.isItemsHasQuantityNotEmptyAndGreaterThanZero()) {
+          this.$notifications.error(this.$t('.notifications.failure_without_quantities'))
+          return
+        }
+
         const formData = new FormData(this.$refs.form)
         this.submitting = true
 

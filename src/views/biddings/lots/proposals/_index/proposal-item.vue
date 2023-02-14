@@ -1,17 +1,21 @@
 <style scoped lang="scss">
   .list-item {
     position: relative;
+
+    .list-title, .list-span {
+      padding: 0 30px;
+    }
   }
 
   .lowest-badge {
     padding: 2px 10px;
     position: absolute;
     right: 0;
-    top: -10px;
+    top: -28px;
     z-index: 2;
 
     font-size: 13px;
-    background-color: rgba(126, 211, 33, 0.7);
+    background-color: rgba(126, 211, 33, 0.9);
     color: white;
     border-radius: 15px;
     border-bottom-right-radius: 0;
@@ -48,72 +52,95 @@
 
   .danger-text {
     color: $danger-color;
+    margin-bottom:10px;
+    border: 1px dotted $danger-color;
+    padding: 5px;
+  }
+
+  .container {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
+  .span-inline-label {
+    display: block;
+    font-weight: normal;
+    font-size: 80%;
+    color: $greyish-brown-two;
   }
 </style>
 
 <template lang="pug">
-  li.list-item.row
-    .lowest-badge(v-if="proposal.current")
-      | {{ $t('.proposals.current') }}
-    .container
-      .list-title(v-if="seeWithDetails")
-        span.span-inline-label {{ $t('.proposals.supplier') }}
-        span.provider-title {{ proposal.provider.name }}
-      .list-title(v-else)
-        | {{ $t('.proposals.proposal') }} {{ index+1 }}
+li.list-item.row
+  .lowest-badge(v-if="proposal.current")
+    | {{ $t('.proposals.current') }}
+  .container
+    .list-title(v-if="seeWithDetails")
+      span.span-inline-label {{ $t('.proposals.supplier') }}
+      span.provider-title {{ proposal.provider.name }}
+    .list-title(v-else)
+      | {{ $t('.proposals.proposal') }} {{ index+1 }}
 
-      span.list-span
-        | {{ $t('.total', { value: $asCurrency(proposal.price_total) }) }}
+    .list-span.mt-0(v-if="proposal.status != 'sent' && proposal.suppliers")
+      | {{ proposal.suppliers[0].email }}
+    
+    .list-span.mt-0(v-if="proposal.status != 'sent' && proposal.suppliers")
+      | {{ proposal.suppliers[0].phone }}
 
-      .proposal-actions.mt-1(v-if="proposal.current")
-        .button.button-danger.button-refuse-proposal(@click="toggleRefuseOverlay(proposal)")
-          | {{ $t('.proposals.buttons.refuse') }}
+    .list-span.mt-1
+      span.span-inline-label {{ $t('.total', { value: '' }) }}
+      | {{ $asCurrency(proposal.price_total) }}
 
-        router-link.button(:to="showPath")
-          | {{ $t('.proposals.buttons.view') }}
+    .proposal-actions.mt-1(v-if="proposal.current")
+      .button.button-danger.button-refuse-proposal(@click="toggleRefuseOverlay(proposal)")
+        | {{ $t('.proposals.buttons.refuse') }}
 
-        .button.button-primary.button-accept-proposal(@click="toggleAcceptOverlay(proposal)")
-          | {{ $t('.proposals.buttons.accept') }}
+      router-link.button(:to="showPath")
+        | {{ $t('.proposals.buttons.view') }}
 
-      .proposal-actions.mt-1(v-else-if="proposal.status == 'coop_accepted'")
-        .alert.alert-success.mb-2
-          | {{ $t('.proposals.alert') }}
+      .button.button-primary.button-accept-proposal(@click="toggleAcceptOverlay(proposal)")
+        | {{ $t('.proposals.buttons.accept') }}
 
-        span.success-text
-          | {{ $t('.proposals.status.coop_accepted') }}
+    .proposal-actions.mt-1(v-else-if="proposal.status == 'coop_accepted'")
+      .alert.alert-success.mb-2
+        | {{ $t('.proposals.alert') }}
 
-        router-link.button.ml-1(:to="showPath")
-          | {{ $t('.proposals.buttons.view') }}
+      span.success-text
+        | {{ $t('.proposals.status.coop_accepted') }}
 
-      .proposal-actions.mt-1(v-else-if="proposal.status == 'coop_refused' || proposal.status == 'refused'")
-        span.danger-text
-          | {{ $t('.proposals.status.refused') }}
+      router-link.button.ml-1(:to="showPath")
+        | {{ $t('.proposals.buttons.view') }}
 
-        router-link.button.ml-1(:to="showPath")
-          | {{ $t('.proposals.buttons.view') }}
+    .proposal-actions.mt-1(v-else-if="proposal.status == 'coop_refused' || proposal.status == 'refused'")
+      div.danger-text
+        | {{ $t('.proposals.status.refused') }}
 
-      .proposal-actions.mt-1(v-else-if="proposal.status == 'accepted'")
-        span.success-text
-          i.fa.fa-star.mr-1
-          | {{ $t('.proposals.status.accepted') }}
+      router-link.button.ml-1(:to="showPath")
+        | {{ $t('.proposals.buttons.view') }}
 
-        router-link.button.ml-1(:to="showPath")
-          | {{ $t('.proposals.buttons.view') }}
+    .proposal-actions.mt-1(v-else-if="proposal.status == 'accepted'")
+      span.success-text
+        i.fa.fa-star.mr-1
+        | {{ $t('.proposals.status.accepted') }}
 
-      .proposal-actions.mt-1(v-else-if="proposal.status == 'failure'")
-        div.danger-text.mb-1
-          | {{ $t('.proposals.status.failure') }}
+      router-link.button.ml-1(:to="showPath")
+        | {{ $t('.proposals.buttons.view') }}
 
-        router-link.button.ml-1(:to="showPath")
-          | {{ $t('.proposals.buttons.view') }}
+    .proposal-actions.mt-1(v-else-if="proposal.status == 'failure'")
+      div.danger-text.mb-1
+        | {{ $t('.proposals.status.failure') }}
 
-      .proposal-actions.mt-1(v-else-if="seeWithDetails")
-        router-link.button(:to="showPath")
-          | {{ $t('.proposals.buttons.view') }}
+      router-link.button.ml-1(:to="showPath")
+        | {{ $t('.proposals.buttons.view') }}
 
-    accept-proposal-overlay(:showOverlay="showAcceptOverlay", :item="acceptOverlayItem", @closeOverlay="showAcceptOverlay = false", @success="successAccept", :routeName="routeName")
+    .proposal-actions.mt-1(v-else-if="seeWithDetails")
+      router-link.button(:to="showPath")
+        | {{ $t('.proposals.buttons.view') }}
 
-    refuse-proposal-overlay(:showOverlay="showRefuseOverlay", :item="refuseOverlayItem", @closeOverlay="showRefuseOverlay = false", @success="successRefuse", :routeName="routeName")
+  accept-proposal-overlay(:showOverlay="showAcceptOverlay", :item="acceptOverlayItem", @closeOverlay="showAcceptOverlay = false", @success="successAccept", :routeName="routeName")
+
+  refuse-proposal-overlay(:showOverlay="showRefuseOverlay", :item="refuseOverlayItem", @closeOverlay="showRefuseOverlay = false", @success="successRefuse", :routeName="routeName")
 
 </template>
 

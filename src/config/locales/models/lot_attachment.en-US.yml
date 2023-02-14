@@ -1,0 +1,12 @@
+en-US:
+  models:
+    lot_attachment:
+      one: Attachment
+      other: Attachments
+
+      attributes:
+        notification_message: Message
+
+      errors:
+        notification_message:
+          missing: Message cannot be blank

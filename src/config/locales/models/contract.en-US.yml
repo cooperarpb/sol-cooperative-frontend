@@ -17,6 +17,8 @@
         bidding_title: Procurement process
         provider_title: Vendor
 
+        inexecutionReason: Reason (Required)
+
         statuses:
           waiting_signature: Awaiting vendor
           signed: Signed
@@ -24,3 +26,6 @@
           partial_execution: Partially executed
           total_inexecution: Complete nonperformance
           refused: Rejected
+          unsigned_by_supplier: Not signed by vendor
+
+

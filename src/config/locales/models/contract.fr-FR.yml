@@ -17,6 +17,8 @@
         bidding_title: Appel d'offres
         provider_title: Fournisseur
 
+        inexecutionReason: Raison (obligatoire)
+
         statuses:
           waiting_signature: En attente du fournisseur
           signed: Signé
@@ -24,3 +26,4 @@
           partial_execution: Réalisé partiellement
           total_inexecution: Non réalisation totale
           refused: Rejeté
+          unsigned_by_supplier: Non signé par le fournisseur

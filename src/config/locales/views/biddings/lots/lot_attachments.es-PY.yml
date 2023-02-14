@@ -1,0 +1,30 @@
+es-PY:
+  biddings:
+    lots:
+      lot_attachments:
+        index:
+          title: Archivos adjuntos
+          no_lot_attachments: No hay archivos adjuntos registrados
+          button:
+            new_request: Solicitar archivo adjunto
+
+        new:
+          title: Solicitar archivos adjuntos
+          confirm:
+            title: ¿Desea enviar la solicitud?
+            body: Se enviará una notificación al proveedor.
+          dialog:
+            back: Atras
+            confirm: Enviar
+
+          button:
+            submit: Enviar
+            submitting: Enviando
+
+          form:
+            fields:
+              notification_message: Mensaje
+
+          notifications:
+            success: Mensaje enviado con exito
+            failure: Hubo un error al enviar el mensaje

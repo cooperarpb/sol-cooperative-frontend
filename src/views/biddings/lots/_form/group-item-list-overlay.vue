@@ -14,6 +14,23 @@
     }
   }
 
+  ul.inner-list {
+    margin: 1.5rem 0 1.5rem 2rem;
+
+    li.list-item {
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      border-bottom: solid 1px #d8d8d8;
+      color: $danger-color;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  label.red {
+    color: $danger-color;
+  }
+
 </style>
 
 <template lang="pug">
@@ -70,6 +87,13 @@
             span
               | {{ $asNumber(group_item.available_quantity, { precision: 2 }) }} / {{ $asNumber(group_item.quantity, { precision: 2 }) }}
               | {{ group_item.item_unit }}
+
+            .item-container(v-if="group_item.covenant_draft_biddings_in_use.length > 0")
+              label.red.inline-block
+                | {{ $t('models.group_item.attributes.covenant_draft_biddings_in_use') }}:
+              ul.inner-list
+                li.list-item.mb-1.o-container
+                  | {{ group_item.covenant_draft_biddings_in_use }}
 
           .container(v-if="group_item.used")
             .alert.alert-info
@@ -134,13 +158,13 @@
       },
 
       fetchSearch() {
-        this.getGroupItems(this.search)
+        this.getGroupItems({ page: this.page, search: this.search })
       },
 
       getGroupItems(oParams) {
         this.isLoadingOverlay = true
-        const page = oParams ? 1 : this.page
-        return this.$http.get(`/cooperative/covenants/${this.covenantId}/group_items/?page=${page}&search=${oParams}`)
+
+        return this.$http.get(`/cooperative/covenants/${this.covenantId}/group_items`, { params: oParams })
           .then((response) => {
             this.group_items = response.data
             this.groupItemsCount = this.group_items.length
@@ -181,6 +205,16 @@
         this.lastPageLink = _.dig(links, 'last', 'page')
       },
 
+      updatePagination(aResponse) {
+        this.page = aResponse.headers['x-page']
+        this.totalPages = aResponse.headers['x-total']
+        let links = parseLinkHeaders(aResponse.headers.link) || {}
+        this.firstPageLink = _.dig(links, 'first', 'page')
+        this.prevPageLink = _.dig(links, 'prev', 'page')
+        this.nextPageLink = _.dig(links, 'next', 'page')
+        this.lastPageLink = _.dig(links, 'last', 'page')
+      },
+
       addLotGroupItem: function(group_item) {
         let alreadyAdd = false
         let wasDestroyedIndex = -1
@@ -197,7 +231,7 @@
               alreadyAdd = true
             }
           }
-        });
+        })
 
         if(!alreadyAdd) {
           let addParams = {
@@ -232,10 +266,8 @@
       fetchParams() {
         this.fetchSearch()
       },
-
       page() {
         this.params = Object.assign({}, this.params, { page: this.page });
-        // this.updateRoute()
       }
     }
   }

@@ -36,6 +36,7 @@
 
         button:
           proposals: Ver propuestas
+          lot_attachments: Archivos adjuntos
 
         files:
           title: Archivos del lote
@@ -77,6 +78,15 @@
           search:
             placeholder: Busque por ítems de costo
 
+        group_list_overlay:
+          title: Grupos disponibles
+          empty: Ningún grupo disponible
+          already_in_the_current_lot: Todos los artículos con cantidades disponibles ya están en el lote actual
+          items_not_available: Ningún artículo con cantidad disponible
+
+          search:
+            placeholder: Busque por grupos
+
         files-fields:
           files:
             title: Archivos del lote
@@ -93,6 +103,7 @@
 
             buttons:
               add: Agregar ítem
+              add_group: Agregar grupo
               remove: Remover
         lot-fields:
           general:

@@ -1,0 +1,29 @@
+pt-BR:
+  biddings:
+    lots:
+      lot_questions:
+        index:
+          title: Esclarecimentos
+          waiting_answer: Aguardando resposta
+          no_lot_questions: Não há perguntas cadastradas
+
+        edit:
+          title: Editar esclarecimento
+          confirm:
+            title: Deseja enviar a resposta?
+            body: Após o envio, a resposta não poderá ser alterada.
+          dialog:
+            back: Voltar
+            confirm: Enviar
+
+          button:
+            submit: Enviar
+            submitting: Enviando
+
+          form:
+            fields:
+              question_label: Pergunta
+              answer_label: Resposta
+          notifications:
+            success: Esclarecimento atualizado com sucesso
+            failure: Houve um erro ao atualizar o esclarecimento

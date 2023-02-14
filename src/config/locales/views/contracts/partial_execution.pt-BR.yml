@@ -2,6 +2,8 @@ pt-BR:
   contracts:
     partial_execution:
       edit:
+        inexecution_reason_label: Motivo (Obrigatório)
+
         item:
           title: Item de custo
           total_quantity: Quantitade licitada

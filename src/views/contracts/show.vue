@@ -1,5 +1,9 @@
 <style scoped lang="scss">
   .badge {
+    &.unsigned_by_supplier {
+      background-color: $purple;
+    }
+
     &.waiting_signature {
       background-color: $greyish-brown;
     }
@@ -35,6 +39,22 @@
       padding: 0 20px;
     }
   } 
+
+
+  #view {
+    button.button-primary {
+      &.inactive {
+        background-color: $brownish-grey;
+        border-color: $brownish-grey;
+  
+        &:hover {
+          background-color: $brownish-grey;
+          border-color: $brownish-grey;
+          color: $white
+        }
+      }
+    }
+  }
 
 </style>
 
@@ -165,8 +185,16 @@
               .alert.alert-info
                 | {{ $t('.total_inexecution.' + picked + '.description') }}
 
+              form(ref="form", method="patch", @submit.prevent="submit")
+
+                textarea-field.mb-0(
+                  type="text",
+                  v-model="contract.inexecution_reason",
+                  name="contract[inexecution_reason]"
+                )
+
               .text-center.mt-2
-                button.button.button-primary(@click="totalInexecution", :disabled="totalInexecuting")
+                button.button.button-primary(@click="totalInexecution", :disabled="isSubmitButtonDisabled", :class="{inactive: isSubmitButtonDisabled}")
                   template(v-if="totalInexecuting")
                     i.fa.fa-spin.fa-spinner
                   template(v-else)
@@ -295,12 +323,25 @@
       },
 
       statuses() {
-        return [
+        let statues_items = [
           { id: 'signed', text: this.$t('options.blank') },
           { id: 'completed', text: this.$t('models.contract.attributes.statuses.completed') },
           { id: 'partial_execution', text: this.$t('models.contract.attributes.statuses.partial_execution') },
           { id: 'total_inexecution', text: this.$t('models.contract.attributes.statuses.total_inexecution') }
         ]
+
+        return this.contract.lot_group_item_count === 1 ? statues_items.filter(item => item.id !== 'partial_execution') : statues_items
+      },
+
+      isSubmitButtonDisabled() {
+        if (this.contract.inexecution_reason === undefined ||
+            this.contract.inexecution_reason === null ||
+            this.contract.inexecution_reason.replace(/\s/g,'') === '') {
+
+          return true
+        }
+
+        return false
       },
     },
 
@@ -349,9 +390,10 @@
       },
 
       totalInexecution() {
+        const formData = new FormData(this.$refs.form)
         this.totalInexecuting = true
 
-        return this.$http.patch(this.totalInexecutionPath())
+        return this.$http.patch(this.totalInexecutionPath(), formData)
           .then((response) => {
             this.$notifications.clear()
             this.$notifications.info(this.$t('.notifications.total_inexecution.success'))

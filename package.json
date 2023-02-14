@@ -1,6 +1,6 @@
 {
   "name": "sol-cooperative-frontend.vue",
-  "version": "0.1.0",
+  "version": "1.0.13",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,12 +10,14 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.1.0",
+    "@fortawesome/fontawesome-free": "5.1.0",
     "@sentry/browser": "^5.2.0",
     "@sentry/integrations": "^5.2.0",
+    "@vue/cli": "^4.5.13",
     "axios": "^0.18.0",
+    "babel-loader": "^8.2.2",
     "flatpickr": "^4.5.1",
-    "global": "^4.3.2",
+    "global": "^4.4.0",
     "i18n-js": "^3.0.10",
     "jquery": "^3.3.1",
     "jsonapi-deserializer": "^0.1.1",

@@ -13,6 +13,7 @@
         estimated_cost: Estimated cost
         estimatedCost: Estimated cost
         groupName: Group
+        covenant_draft_biddings_in_use: Draft bids using the item
 
       errors:
         item:
